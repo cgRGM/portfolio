@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ConvexClientProvider } from "@/components/providers/convex-client";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
@@ -38,7 +39,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`font-sans antialiased`}>
-        <ConvexClientProvider>{children}</ConvexClientProvider>
+        <ConvexClientProvider>
+          {children}
+          <SpeedInsights />
+        </ConvexClientProvider>
         <Analytics />
       </body>
     </html>
