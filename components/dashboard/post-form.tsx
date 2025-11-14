@@ -6,9 +6,9 @@ import { api } from "@/convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import Editor from 'react-simple-wysiwyg';
 
 interface PostFormProps {
   post?: any;
@@ -16,47 +16,13 @@ interface PostFormProps {
 }
 
 export function PostForm({ post, onSuccess }: PostFormProps) {
-  // Convert post content to editor format on initialization
-  const getInitialFormContent = () => {
-    if (!post?.content) return "";
-
-    try {
-      const parsed = JSON.parse(post.content);
-      // If it's already valid JSON, keep it as is for the form data
-      return post.content;
-    } catch {
-      // If it's plain text, keep it as is
-      return post.content;
-    }
-  };
-
   const [formData, setFormData] = useState({
     title: post?.title || "",
     slug: post?.slug || "",
     date: post?.date || new Date().toISOString().split('T')[0],
-    content: getInitialFormContent(),
+    content: post?.content || "",
     published: post?.published || false,
   });
-
-  // Convert content for react-simple-wysiwyg (expects HTML)
-  const getInitialContent = () => {
-    if (!formData.content) return '';
-
-    try {
-      // If it's already HTML, return as is
-      if (formData.content.includes('<') && formData.content.includes('>')) {
-        return formData.content;
-      }
-
-      // Try to parse as JSON (from Novel editor)
-      const parsed = JSON.parse(formData.content);
-      // For now, just return plain text - we can enhance this later
-      return formData.content;
-    } catch {
-      // Plain text content
-      return formData.content;
-    }
-  };
 
   const createPost = useMutation(api.posts.createPost);
   const updatePost = useMutation(api.posts.updatePost);
@@ -146,14 +112,17 @@ export function PostForm({ post, onSuccess }: PostFormProps) {
         />
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="content">Content</Label>
-        <Editor
-          value={getInitialContent()}
-          onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-          style={{ minHeight: '300px' }}
-        />
-      </div>
+       <div className="space-y-2">
+         <Label htmlFor="content">Content (Markdown)</Label>
+         <Textarea
+           id="content"
+           value={formData.content}
+           onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+           placeholder="Write your post content in Markdown..."
+           rows={15}
+           required
+         />
+       </div>
 
       <div className="flex items-center space-x-2">
         <Switch

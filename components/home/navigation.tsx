@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navigationItems = [
   { label: "about", href: "/" },
   { label: "writing", href: "/posts" },
   { label: "projects", href: "/projects" },
-]
+];
 
 export default function Navigation() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <>
       <nav className="hidden md:flex fixed left-0 top-0 h-screen w-64 flex-col border-r border-border bg-background px-8 py-12 z-40">
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-foreground">Dev</h2>
+          <h2 className="text-2xl font-bold text-foreground">CG Stewart</h2>
         </div>
 
         <div className="space-y-6 flex-1">
@@ -25,7 +25,9 @@ export default function Navigation() {
               key={item.href}
               href={item.href}
               className={`block text-lg font-light transition-colors ${
-                pathname === item.href ? "text-accent" : "text-muted-foreground hover:text-foreground"
+                pathname === item.href
+                  ? "text-accent"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {item.label}
@@ -34,8 +36,8 @@ export default function Navigation() {
         </div>
 
         <div className="space-y-4 text-xs text-muted-foreground">
-          <p>Built with Next.js</p>
-          <p>© 2025</p>
+          <p>Built with Next.js & Convex</p>
+          <p>© {new Date().getFullYear()}</p>
         </div>
       </nav>
 
@@ -57,5 +59,5 @@ export default function Navigation() {
         </div>
       </nav>
     </>
-  )
+  );
 }

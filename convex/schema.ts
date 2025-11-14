@@ -26,6 +26,7 @@ export default defineSchema({
   projects: defineTable({
     title: v.string(),
     description: v.string(),
+    about: v.optional(v.string()),
     image: v.string(),
     tags: v.array(v.string()),
     github: v.string(),

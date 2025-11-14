@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { X } from "lucide-react";
+import { X, Upload, Image as ImageIcon } from "lucide-react";
 
 interface ProjectFormProps {
   project?: any;
@@ -21,6 +21,7 @@ export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
   const [formData, setFormData] = useState({
     title: project?.title || "",
     description: project?.description || "",
+    about: project?.about || "",
     image: project?.image || "",
     tags: project?.tags || [],
     github: project?.github || "",
@@ -29,22 +30,51 @@ export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
   });
 
   const [tagInput, setTagInput] = useState("");
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const createProject = useMutation(api.projects.createProject);
+  const createProjectWithImage = useMutation(api.projects.createProjectWithImage);
   const updateProject = useMutation(api.projects.updateProject);
+  const updateProjectWithImage = useMutation(api.projects.updateProjectWithImage);
+  const generateUploadUrl = useMutation(api.projects.generateUploadUrl);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      let imageId = formData.image;
+
+      // Upload image if selected
+      if (selectedImage) {
+        imageId = await uploadImage();
+        if (!imageId) {
+          throw new Error("Failed to upload image");
+        }
+      }
+
+      const projectData = {
+        ...formData,
+        image: imageId,
+      };
+
       if (project) {
-        await updateProject({ id: project._id, ...formData });
+        if (selectedImage) {
+          await updateProjectWithImage({ id: project._id, imageId, ...formData });
+        } else {
+          await updateProject({ id: project._id, ...projectData });
+        }
         toast({
           title: "Success",
           description: "Project updated successfully",
         });
       } else {
-        await createProject(formData);
+        if (selectedImage) {
+          await createProjectWithImage({ ...formData, imageId });
+        } else {
+          await createProject(projectData);
+        }
         toast({
           title: "Success",
           description: "Project created successfully",
@@ -53,6 +83,7 @@ export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
         setFormData({
           title: "",
           description: "",
+          about: "",
           image: "",
           tags: [],
           github: "",
@@ -60,6 +91,8 @@ export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
           featured: false,
         });
         setTagInput("");
+        setSelectedImage(null);
+        setImagePreview(null);
       }
       onSuccess?.();
     } catch (error) {
@@ -84,7 +117,7 @@ export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
   const removeTag = (tagToRemove: string) => {
     setFormData({
       ...formData,
-      tags: formData.tags.filter(tag => tag !== tagToRemove),
+      tags: formData.tags.filter((tag: string) => tag !== tagToRemove),
     });
   };
 
@@ -92,6 +125,48 @@ export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
     if (e.key === 'Enter') {
       e.preventDefault();
       addTag();
+    }
+  };
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedImage(file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const uploadImage = async (): Promise<string | null> => {
+    if (!selectedImage) return null;
+
+    try {
+      setIsUploading(true);
+
+      // Step 1: Get upload URL
+      const uploadUrl = await generateUploadUrl();
+
+      // Step 2: Upload file
+      const result = await fetch(uploadUrl, {
+        method: "POST",
+        headers: { "Content-Type": selectedImage.type },
+        body: selectedImage,
+      });
+
+      if (!result.ok) {
+        throw new Error("Upload failed");
+      }
+
+      const { storageId } = await result.json();
+      return storageId;
+    } catch (error) {
+      console.error("Upload error:", error);
+      throw error;
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -108,26 +183,85 @@ export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
         />
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
-        <Textarea
-          id="description"
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-          placeholder="Project description"
-          required
-        />
-      </div>
+       <div className="space-y-2">
+         <Label htmlFor="description">Description</Label>
+         <Textarea
+           id="description"
+           value={formData.description}
+           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+           placeholder="Project description"
+           required
+         />
+       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="image">Image URL</Label>
-        <Input
-          id="image"
-          value={formData.image}
-          onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-          placeholder="https://example.com/image.jpg"
-        />
-      </div>
+       <div className="space-y-2">
+         <Label htmlFor="about">About</Label>
+         <Textarea
+           id="about"
+           value={formData.about}
+           onChange={(e) => setFormData({ ...formData, about: e.target.value })}
+           placeholder="Detailed project write-up (supports Markdown)"
+           rows={8}
+           required
+         />
+       </div>
+
+       <div className="space-y-2">
+         <Label htmlFor="image">Project Image</Label>
+         <div className="space-y-4">
+           {imagePreview && (
+             <div className="relative">
+               <img
+                 src={imagePreview}
+                 alt="Preview"
+                 className="w-full max-w-sm h-48 object-cover rounded-lg border"
+               />
+               <Button
+                 type="button"
+                 variant="destructive"
+                 size="sm"
+                 className="absolute top-2 right-2"
+                 onClick={() => {
+                   setSelectedImage(null);
+                   setImagePreview(null);
+                 }}
+               >
+                 <X className="w-4 h-4" />
+               </Button>
+             </div>
+           )}
+           <div className="flex items-center gap-4">
+             <Input
+               type="file"
+               accept="image/*"
+               onChange={handleImageSelect}
+               className="flex-1"
+             />
+             <Button
+               type="button"
+               variant="outline"
+               onClick={() => document.querySelector<HTMLInputElement>('input[type="file"]')?.click()}
+               disabled={isUploading}
+             >
+               <Upload className="w-4 h-4 mr-2" />
+               {isUploading ? "Uploading..." : "Upload"}
+             </Button>
+           </div>
+           <p className="text-sm text-muted-foreground">
+             Upload a project image or provide an image URL below
+           </p>
+         </div>
+       </div>
+
+       <div className="space-y-2">
+         <Label htmlFor="image-url">Image URL (optional - if not uploading above)</Label>
+         <Input
+           id="image"
+           value={formData.image}
+           onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+           placeholder="https://example.com/image.jpg"
+         />
+       </div>
 
       <div className="space-y-2">
         <Label>Tags</Label>
@@ -143,7 +277,7 @@ export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
           </Button>
         </div>
         <div className="flex flex-wrap gap-2 mt-2">
-          {formData.tags.map((tag) => (
+          {formData.tags.map((tag: string) => (
             <Badge key={tag} variant="secondary" className="flex items-center gap-1">
               {tag}
               <X

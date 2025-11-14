@@ -10,6 +10,7 @@ export const getProjects = query({
     _creationTime: v.number(),
     title: v.string(),
     description: v.string(),
+    about: v.optional(v.string()),
     image: v.string(),
     tags: v.array(v.string()),
     github: v.string(),
@@ -38,6 +39,7 @@ export const getProject = query({
       _creationTime: v.number(),
       title: v.string(),
       description: v.string(),
+      about: v.optional(v.string()),
       image: v.string(),
       tags: v.array(v.string()),
       github: v.string(),
@@ -55,6 +57,7 @@ export const createProject = mutation({
   args: {
     title: v.string(),
     description: v.string(),
+    about: v.optional(v.string()),
     image: v.string(),
     tags: v.array(v.string()),
     github: v.string(),
@@ -73,10 +76,11 @@ export const updateProject = mutation({
     id: v.id("projects"),
     title: v.optional(v.string()),
     description: v.optional(v.string()),
+    about: v.optional(v.string()),
     image: v.optional(v.string()),
     tags: v.optional(v.array(v.string())),
-    github: v.optional(v.string()),
-    live: v.optional(v.string()),
+    github: v.string(),
+    live: v.string(),
     featured: v.optional(v.boolean()),
   },
   returns: v.null(),
@@ -95,5 +99,70 @@ export const deleteProject = mutation({
   handler: async (ctx, args) => {
     await ctx.db.delete(args.id);
     return null;
+  },
+});
+
+export const generateUploadUrl = mutation({
+  args: {},
+  returns: v.string(),
+  handler: async (ctx) => {
+    return await ctx.storage.generateUploadUrl();
+  },
+});
+
+export const createProjectWithImage = mutation({
+  args: {
+    title: v.string(),
+    description: v.string(),
+    about: v.optional(v.string()),
+    imageId: v.id("_storage"),
+    tags: v.array(v.string()),
+    github: v.string(),
+    live: v.string(),
+    featured: v.boolean(),
+  },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    await ctx.db.insert("projects", {
+      title: args.title,
+      description: args.description,
+      about: args.about,
+      image: args.imageId,
+      tags: args.tags,
+      github: args.github,
+      live: args.live,
+      featured: args.featured,
+    });
+    return null;
+  },
+});
+
+export const updateProjectWithImage = mutation({
+  args: {
+    id: v.id("projects"),
+    title: v.optional(v.string()),
+    description: v.optional(v.string()),
+    about: v.optional(v.string()),
+    imageId: v.optional(v.id("_storage")),
+    tags: v.optional(v.array(v.string())),
+    github: v.string(),
+    live: v.string(),
+    featured: v.optional(v.boolean()),
+  },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    const { id, ...updates } = args;
+    await ctx.db.patch(id, updates);
+    return null;
+  },
+});
+
+export const getImageUrl = query({
+  args: {
+    storageId: v.id("_storage"),
+  },
+  returns: v.string(),
+  handler: async (ctx, args) => {
+    return await ctx.storage.getUrl(args.storageId) || "";
   },
 });

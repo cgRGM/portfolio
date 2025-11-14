@@ -3,10 +3,17 @@
 import Link from "next/link";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export default function Projects() {
   const projects = useQuery(api.projects.getProjects, {});
@@ -30,7 +37,7 @@ export default function Projects() {
         </div>
       </section>
     );
-}
+  }
 
   const displayedProjects = projects.slice(0, 5);
 
@@ -41,58 +48,83 @@ export default function Projects() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {displayedProjects.map((project) => (
-            <Card key={project._id} className="group hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="aspect-video overflow-hidden rounded-lg mb-4">
-                  <img
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                  />
-                </div>
-                <CardTitle className="text-xl group-hover:text-accent transition-colors">
-                  {project.title}
-                </CardTitle>
-                <CardDescription className="line-clamp-3">
-                  {project.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-2 mb-4 flex-wrap">
-                  {project.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-                <div className="flex gap-2">
-                  {project.github && (
-                    <Button asChild variant="outline" size="sm" className="flex-1">
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
+            <Link key={project._id} href={`/projects/${project._id}`}>
+              <Card className="group hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader>
+                  <div className="aspect-video overflow-hidden rounded-lg mb-4">
+                    <img
+                      src={project.image || "/placeholder.svg"}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    />
+                  </div>
+                  <CardTitle className="text-xl group-hover:text-accent transition-colors">
+                    {project.title}
+                  </CardTitle>
+                  <CardDescription className="line-clamp-3">
+                    {project.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex gap-2 mb-4 flex-wrap">
+                    {project.tags.map((tag) => (
+                      <Badge key={tag} variant="secondary" className="text-xs">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                  <div className="flex gap-2">
+                    {project.github && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(project.github, '_blank', 'noopener,noreferrer');
+                        }}
                       >
                         <Github className="w-4 h-4 mr-2" />
                         View GitHub
-                      </a>
-                    </Button>
-                  )}
-                  {project.live && (
-                    <Button asChild variant="default" size="sm" className="flex-1">
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      </Button>
+                    )}
+                    {project.live && (
+                      <Button
+                        variant="default"
+                        size="sm"
+                        className="flex-1"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(project.live, '_blank', 'noopener,noreferrer');
+                        }}
                       >
                         <ExternalLink className="w-4 h-4 mr-2" />
                         View Live
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+                      </Button>
+                    )}
+                    {project.live && (
+                      <Button
+                        asChild
+                        variant="default"
+                        size="sm"
+                        className="flex-1"
+                      >
+                        <Link
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          prefetch={false}
+                        >
+                          <ExternalLink className="w-4 h-4 mr-2" />
+                          View Live
+                        </Link>
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
 
@@ -107,5 +139,5 @@ export default function Projects() {
         )}
       </div>
     </section>
-  )
+  );
 }

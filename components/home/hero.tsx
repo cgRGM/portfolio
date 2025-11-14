@@ -2,14 +2,25 @@
 
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { TypeScript, ReactLight, Nextjs, Nodejs, PostgreSQL, GitHubLight, Twitter, LinkedIn } from "@ridemountainpig/svgl-react";
+import {
+  TypeScript,
+  ReactLight,
+  Nextjs,
+  Nodejs,
+  PostgreSQL,
+  GitHubLight,
+  XAILight,
+  LinkedIn,
+  VercelDark,
+  XAIDark,
+} from "@ridemountainpig/svgl-react";
 
 export default function Hero() {
   const bio = useQuery(api.bio.getBio, {});
 
   if (!bio) {
     return (
-      <section id="about" className="md:ml-64 px-8 py-24 md:py-32 max-w-4xl">
+      <section id="about" className="m-8 py-24 md:py-32 max-w-6xl">
         <div className="space-y-8">
           <div>
             <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-4">
@@ -27,10 +38,11 @@ export default function Hero() {
     { name: "Next.js", icon: Nextjs },
     { name: "Node.js", icon: Nodejs },
     { name: "PostgreSQL", icon: PostgreSQL },
+    { name: "Vercel", icon: VercelDark },
   ];
 
   return (
-    <section id="about" className="md:ml-64 px-8 py-24 md:py-32 max-w-4xl">
+    <section id="about" className="m-8 py-24 md:py-32 max-w-6xl">
       <div className="space-y-8">
         <div>
           <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-4">
@@ -53,15 +65,13 @@ export default function Hero() {
               className="text-accent hover:underline inline-flex items-center gap-1"
             >
               <GitHubLight className="w-4 h-4" />
-              GitHub
             </a>
             ,{" "}
             <a
               href={bio.socialLinks.twitter}
               className="text-accent hover:underline inline-flex items-center gap-1"
             >
-              <Twitter className="w-4 h-4" />
-              X
+              <XAIDark className="size-6 mt-8" />
             </a>
             , or{" "}
             <a
@@ -69,7 +79,6 @@ export default function Hero() {
               className="text-accent hover:underline inline-flex items-center gap-1"
             >
               <LinkedIn className="w-4 h-4" />
-              LinkedIn
             </a>
             .
           </p>

@@ -1,49 +1,24 @@
-# Agent Guidelines for Portfolio Project
+# Agent Guidelines for CG Stewart Portfolio
 
 ## Build Commands
 - `pnpm dev` - Start development server
-- `pnpm build` - Build for production
-- `pnpm lint` - Run ESLint (no test scripts configured)
+- `pnpm build` - Build for production (✓ working)
 - `pnpm start` - Start production server
 - `npx convex dev` - Start Convex development server
+- No lint/test scripts configured - add ESLint/Vitest if needed
 
 ## Routes & Data Flow
-- `/` - Portfolio homepage (uses bio, posts, projects from Convex)
-- `/posts` - Blog posts listing (queries published posts)
-- `/posts/[slug]` - Individual blog post (uses slug for public URLs)
-- `/projects` - Projects listing (shows all projects)
-- `/projects/[id]` - Individual project (uses ID for routing)
-- `/dashboard` - Admin dashboard (full CRUD for bio, posts, projects)
-
-## Convex Integration
-- **Schema**: `bios`, `posts`, `projects` tables with system `_id` fields
-- **Functions**: Separate files for bio, posts, projects with full CRUD operations
-- **Data Shapes**: Posts(slug, title, content, date, published), Projects(title, description, image, tags, github, live, featured)
-- **Routing**: Public routes use slugs/IDs, admin operations use Convex IDs
+- `/` - Portfolio homepage (bio, posts, projects from Convex)
+- `/posts` - Blog posts listing (published posts only)
+- `/posts/[slug]` - Individual blog post (slug-based routing, Markdown content)
+- `/projects` - Projects listing (all projects)
+- `/projects/[id]` - Individual project (ID-based routing, Markdown about content)
+- `/dashboard` - Admin dashboard (full CRUD operations)
 
 ## Code Style Guidelines
-
-### Imports & Structure
-- Use `@/` alias for internal imports (tsconfig.json configured)
-- Import order: React → third-party → internal components → utils
-- Use shadcn/ui components from `@/components/ui`
-- Follow Next.js App Router conventions
-
-### TypeScript & Types
-- Strict TypeScript enabled with proper type safety
-- Use `React.ComponentProps` for component prop extension
-- Prefer `type` over `interface` unless extending
-- Use `VariantProps` from class-variance-authority for variants
-
-### Component Patterns
-- shadcn/ui patterns with `cn()` utility for class merging
-- `cva()` for component variants with consistent styling
-- `asChild` prop pattern for composition
-- File structure: components/ui/, components/, app/, lib/, hooks/
-
-### Styling & Error Handling
-- Tailwind CSS with dark mode support via `cn()` utility
-- shadcn/ui "new-york" style variants
-- Semantic HTML elements throughout
-- TypeScript strict mode for error prevention
-- Toast notifications for user feedback
+- **Imports**: `@/` alias, order: React → third-party → internal → utils
+- **Types**: Strict TS, prefer `type` over `interface`, use `React.ComponentProps`
+- **Components**: shadcn/ui patterns, `cn()` utility, `cva()` variants, `asChild` composition
+- **Styling**: Tailwind + dark mode, semantic HTML, "new-york" variants
+- **Error Handling**: TypeScript strict mode, toast notifications
+- **File Structure**: components/ui/, components/, app/, lib/, hooks/

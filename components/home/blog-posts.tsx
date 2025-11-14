@@ -11,7 +11,10 @@ export default function BlogPosts() {
 
   if (!posts) {
     return (
-      <section id="writing" className="px-8 py-20 border-t border-border max-w-4xl">
+      <section
+        id="writing"
+        className="px-8 py-20 border-t border-border max-w-6xl"
+      >
         <h2 className="text-2xl font-bold text-foreground mb-8">Writing</h2>
         <div className="space-y-4">
           <div className="py-3">Loading posts...</div>
@@ -21,19 +24,30 @@ export default function BlogPosts() {
   }
 
   return (
-    <section id="writing" className="px-8 py-20 border-t border-border max-w-4xl mx-auto">
+    <section
+      id="writing"
+      className="px-8 py-20 border-t border-border max-w-6xl mx-auto"
+    >
       <h2 className="text-2xl font-bold text-foreground mb-8">Writing</h2>
 
       <div className="space-y-6">
         {posts.slice(0, 3).map((post) => (
-          <div key={post._id} className="group border border-border rounded-lg p-6 hover:border-accent transition-colors">
+          <div
+            key={post._id}
+            className="group border border-border rounded-lg p-6 hover:border-accent transition-colors"
+          >
             <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex-1">
-                <Link href={`/posts/${post.slug}`} className="group-hover:text-accent transition-colors">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">{post.title}</h3>
+                <Link
+                  href={`/posts/${post.slug}`}
+                  className="group-hover:text-accent transition-colors"
+                >
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
+                    {post.title}
+                  </h3>
                 </Link>
                 <p className="text-muted-foreground text-sm line-clamp-2">
-                  {post.content.replace(/<[^>]*>/g, '').substring(0, 120)}...
+                  {post.content.replace(/<[^>]*>/g, "").substring(0, 120)}...
                 </p>
               </div>
               <time className="text-sm text-muted-foreground whitespace-nowrap shrink-0">
@@ -65,12 +79,10 @@ export default function BlogPosts() {
       {posts.length > 3 && (
         <div className="mt-8 text-center">
           <Button asChild variant="outline">
-            <Link href="/posts">
-              View All Posts ({posts.length - 3} more)
-            </Link>
+            <Link href="/posts">View All Posts ({posts.length - 3} more)</Link>
           </Button>
         </div>
       )}
     </section>
-  )
+  );
 }

@@ -3,15 +3,13 @@
 import Link from "next/link";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import Navigation from "@/components/home/navigation";
 
 export default function PostsPage() {
   const posts = useQuery(api.posts.getPosts, { publishedOnly: true });
 
   if (!posts) {
     return (
-      <div className="flex min-h-screen bg-background">
-        <Navigation />
+      <div className="flex min-h-screen bg-background m-20">
         <main className="flex-1 px-8 py-20 md:py-20 pb-20 md:pb-0">
           <div className="max-w-4xl">
             <Link
@@ -33,8 +31,7 @@ export default function PostsPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Navigation />
+    <div className="flex min-h-screen bg-background m-20">
       <main className="flex-1 overflow-auto md:ml-64 pb-20 md:pb-0">
         <div className="max-w-4xl">
           <Link
