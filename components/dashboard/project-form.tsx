@@ -71,8 +71,14 @@ export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
         if (selectedImage) {
           await updateProjectWithImage({
             id: project._id,
-            ...projectData,
-            imageId: finalImageValue
+            title: formData.title,
+            description: formData.description,
+            about: formData.about,
+            imageId: finalImageValue,
+            tags: formData.tags,
+            github: formData.github,
+            live: formData.live,
+            featured: formData.featured
           });
         } else {
           await updateProject({
@@ -88,8 +94,14 @@ export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
         // Create new project
         if (selectedImage) {
           await createProjectWithImage({
-            ...projectData,
-            imageId: finalImageValue
+            title: formData.title,
+            description: formData.description,
+            about: formData.about,
+            imageId: finalImageValue,
+            tags: formData.tags,
+            github: formData.github,
+            live: formData.live,
+            featured: formData.featured
           });
         } else {
           await createProject(projectData);
