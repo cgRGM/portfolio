@@ -81,7 +81,11 @@ export default function Projects() {
                         className="flex-1"
                         onClick={(e) => {
                           e.stopPropagation();
-                          window.open(project.github, '_blank', 'noopener,noreferrer');
+                          window.open(
+                            project.github,
+                            "_blank",
+                            "noopener,noreferrer",
+                          );
                         }}
                       >
                         <Github className="w-4 h-4 mr-2" />
@@ -95,30 +99,15 @@ export default function Projects() {
                         className="flex-1"
                         onClick={(e) => {
                           e.stopPropagation();
-                          window.open(project.live, '_blank', 'noopener,noreferrer');
+                          window.open(
+                            project.live,
+                            "_blank",
+                            "noopener,noreferrer",
+                          );
                         }}
                       >
                         <ExternalLink className="w-4 h-4 mr-2" />
                         View Live
-                      </Button>
-                    )}
-                    {project.live && (
-                      <Button
-                        asChild
-                        variant="default"
-                        size="sm"
-                        className="flex-1"
-                      >
-                        <Link
-                          href={project.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          prefetch={false}
-                        >
-                          <ExternalLink className="w-4 h-4 mr-2" />
-                          View Live
-                        </Link>
                       </Button>
                     )}
                   </div>

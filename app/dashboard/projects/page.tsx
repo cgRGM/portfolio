@@ -39,21 +39,21 @@ export default function ProjectsPage() {
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-semibold">Projects</h1>
         <Dialog>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              New Project
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Create New Project</DialogTitle>
-              <DialogDescription>
-                Add a new project to your portfolio.
-              </DialogDescription>
-            </DialogHeader>
-            <ProjectForm />
-          </DialogContent>
+                   <DialogTrigger asChild>
+                     <Button>
+                       <Plus className="w-4 h-4 mr-2" />
+                       New Project
+                     </Button>
+                   </DialogTrigger>
+                   <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto">
+                     <DialogHeader>
+                       <DialogTitle>Create New Project</DialogTitle>
+                       <DialogDescription>
+                         Add a new project to your portfolio.
+                       </DialogDescription>
+                     </DialogHeader>
+                     <ProjectForm />
+                   </DialogContent>
         </Dialog>
       </div>
 
@@ -84,23 +84,23 @@ export default function ProjectsPage() {
                     <Eye className="w-4 h-4" />
                   </Button>
                   <Dialog>
-                    <DialogTrigger asChild>
-                      <Button variant="outline" size="sm" onClick={() => setEditingProject(project)}>
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-                      <DialogHeader>
-                        <DialogTitle>Edit Project</DialogTitle>
-                        <DialogDescription>
-                          Update your project.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <ProjectForm
-                        project={editingProject}
-                        onSuccess={() => setEditingProject(null)}
-                      />
-                    </DialogContent>
+                     <DialogTrigger asChild>
+                       <Button variant="outline" size="sm" onClick={() => setEditingProject(project)}>
+                         <Edit className="w-4 h-4" />
+                       </Button>
+                     </DialogTrigger>
+                     <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto">
+                       <DialogHeader>
+                         <DialogTitle>Edit Project</DialogTitle>
+                         <DialogDescription>
+                           Update your project.
+                         </DialogDescription>
+                       </DialogHeader>
+                       <ProjectForm
+                         project={editingProject}
+                         onSuccess={() => setEditingProject(null)}
+                       />
+                     </DialogContent>
                   </Dialog>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>

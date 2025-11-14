@@ -44,34 +44,53 @@ export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      let imageId = formData.image;
+      let finalImageValue = formData.image;
 
       // Upload image if selected
       if (selectedImage) {
-        imageId = await uploadImage();
+        const imageId = await uploadImage();
         if (!imageId) {
           throw new Error("Failed to upload image");
         }
+        finalImageValue = imageId;
       }
 
       const projectData = {
-        ...formData,
-        image: imageId,
+        title: formData.title,
+        description: formData.description,
+        about: formData.about,
+        image: finalImageValue,
+        tags: formData.tags,
+        github: formData.github,
+        live: formData.live,
+        featured: formData.featured
       };
 
       if (project) {
+        // Update existing project
         if (selectedImage) {
-          await updateProjectWithImage({ id: project._id, imageId, ...formData });
+          await updateProjectWithImage({
+            id: project._id,
+            ...projectData,
+            imageId: finalImageValue
+          });
         } else {
-          await updateProject({ id: project._id, ...projectData });
+          await updateProject({
+            id: project._id,
+            ...projectData
+          });
         }
         toast({
           title: "Success",
           description: "Project updated successfully",
         });
       } else {
+        // Create new project
         if (selectedImage) {
-          await createProjectWithImage({ ...formData, imageId });
+          await createProjectWithImage({
+            ...projectData,
+            imageId: finalImageValue
+          });
         } else {
           await createProject(projectData);
         }
@@ -96,6 +115,7 @@ export function ProjectForm({ project, onSuccess }: ProjectFormProps) {
       }
       onSuccess?.();
     } catch (error) {
+      console.error("Form submission error:", error);
       toast({
         title: "Error",
         description: `Failed to ${project ? 'update' : 'create'} project`,

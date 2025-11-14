@@ -39,21 +39,21 @@ export default function PostsPage() {
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-semibold">Blog Posts</h1>
         <Dialog>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              New Post
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Create New Post</DialogTitle>
-              <DialogDescription>
-                Add a new blog post to your portfolio.
-              </DialogDescription>
-            </DialogHeader>
-            <PostForm />
-          </DialogContent>
+                   <DialogTrigger asChild>
+                     <Button>
+                       <Plus className="w-4 h-4 mr-2" />
+                       New Post
+                     </Button>
+                   </DialogTrigger>
+                   <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto">
+                     <DialogHeader>
+                       <DialogTitle>Create New Post</DialogTitle>
+                       <DialogDescription>
+                         Add a new blog post to your portfolio.
+                       </DialogDescription>
+                     </DialogHeader>
+                     <PostForm />
+                   </DialogContent>
         </Dialog>
       </div>
 
@@ -80,23 +80,23 @@ export default function PostsPage() {
                     <Eye className="w-4 h-4" />
                   </Button>
                   <Dialog>
-                    <DialogTrigger asChild>
-                      <Button variant="outline" size="sm" onClick={() => setEditingPost(post)}>
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-                      <DialogHeader>
-                        <DialogTitle>Edit Post</DialogTitle>
-                        <DialogDescription>
-                          Update your blog post.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <PostForm
-                        post={editingPost}
-                        onSuccess={() => setEditingPost(null)}
-                      />
-                    </DialogContent>
+                   <DialogTrigger asChild>
+                     <Button variant="outline" size="sm" onClick={() => setEditingPost(post)}>
+                       <Edit className="w-4 h-4" />
+                     </Button>
+                   </DialogTrigger>
+                   <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto">
+                     <DialogHeader>
+                       <DialogTitle>Edit Post</DialogTitle>
+                       <DialogDescription>
+                         Update your blog post.
+                       </DialogDescription>
+                     </DialogHeader>
+                     <PostForm
+                       post={editingPost}
+                       onSuccess={() => setEditingPost(null)}
+                     />
+                   </DialogContent>
                   </Dialog>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
