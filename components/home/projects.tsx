@@ -20,8 +20,8 @@ export default function Projects() {
 
   if (!projects) {
     return (
-      <section id="projects" className="px-8 py-20 border-t border-border">
-        <div className="max-w-6xl mx-auto">
+      <section id="projects" className="m-8 py-24 md:py-32 border-t border-border">
+        <div className="max-w-6xl">
           <h2 className="text-2xl font-bold text-foreground mb-12">Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(5)].map((_, i) => (
@@ -41,9 +41,9 @@ export default function Projects() {
 
   const displayedProjects = projects.slice(0, 5);
 
-  return (
-    <section id="projects" className="px-8 py-20 border-t border-border">
-      <div className="max-w-6xl mx-auto">
+    return (
+      <section id="projects" className="m-8 py-24 md:py-32 border-t border-border">
+        <div className="max-w-6xl">
         <h2 className="text-2xl font-bold text-foreground mb-12">Projects</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">

@@ -66,11 +66,15 @@ export default function ProjectsPage() {
                 <Card className="group hover:shadow-lg transition-shadow cursor-pointer">
                   <CardHeader>
                     <div className="aspect-video overflow-hidden rounded-lg mb-4">
-                    <img
-                      src={project.imageUrl || project.image || "/placeholder.svg"}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                    />
+                      <img
+                        src={
+                          project.imageUrl ||
+                          project.image ||
+                          "/placeholder.svg"
+                        }
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                      />
                     </div>
                     <CardTitle className="text-xl group-hover:text-accent transition-colors">
                       {project.title}
@@ -82,7 +86,11 @@ export default function ProjectsPage() {
                   <CardContent>
                     <div className="flex gap-2 mb-4 flex-wrap">
                       {project.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
+                        <Badge
+                          key={tag}
+                          variant="secondary"
+                          className="text-xs"
+                        >
                           {tag}
                         </Badge>
                       ))}
@@ -95,7 +103,11 @@ export default function ProjectsPage() {
                           className="flex-1"
                           onClick={(e) => {
                             e.stopPropagation();
-                            window.open(project.github, '_blank', 'noopener,noreferrer');
+                            window.open(
+                              project.github,
+                              "_blank",
+                              "noopener,noreferrer",
+                            );
                           }}
                         >
                           <Github className="w-4 h-4 mr-2" />
@@ -109,7 +121,11 @@ export default function ProjectsPage() {
                           className="flex-1"
                           onClick={(e) => {
                             e.stopPropagation();
-                            window.open(project.live, '_blank', 'noopener,noreferrer');
+                            window.open(
+                              project.live,
+                              "_blank",
+                              "noopener,noreferrer",
+                            );
                           }}
                         >
                           <ExternalLink className="w-4 h-4 mr-2" />

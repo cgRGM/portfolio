@@ -13,7 +13,7 @@ export default function BlogPosts() {
     return (
       <section
         id="writing"
-        className="px-8 py-20 border-t border-border max-w-6xl"
+        className="m-8 py-24 md:py-32 border-t border-border max-w-6xl"
       >
         <h2 className="text-2xl font-bold text-foreground mb-8">Writing</h2>
         <div className="space-y-4">
@@ -23,11 +23,11 @@ export default function BlogPosts() {
     );
   }
 
-  return (
-    <section
-      id="writing"
-      className="px-8 py-20 border-t border-border max-w-6xl mx-auto"
-    >
+    return (
+      <section
+        id="writing"
+        className="m-8 py-24 md:py-32 border-t border-border max-w-6xl"
+      >
       <h2 className="text-2xl font-bold text-foreground mb-8">Writing</h2>
 
       <div className="space-y-6">
