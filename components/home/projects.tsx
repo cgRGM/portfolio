@@ -52,11 +52,11 @@ export default function Projects() {
               <Card className="group hover:shadow-lg transition-shadow cursor-pointer">
                 <CardHeader>
                   <div className="aspect-video overflow-hidden rounded-lg mb-4">
-                    <img
-                      src={project.image || "/placeholder.svg"}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                    />
+                     <img
+                       src={project.imageUrl || project.image || "/placeholder.svg"}
+                       alt={project.title}
+                       className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                     />
                   </div>
                   <CardTitle className="text-xl group-hover:text-accent transition-colors">
                     {project.title}

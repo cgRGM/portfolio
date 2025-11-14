@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function PostsPage() {
   const [editingPost, setEditingPost] = useState<any>(null);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const posts = useQuery(api.posts.getPosts, {});
   const deletePost = useMutation(api.posts.deletePost);
   const { toast } = useToast();
@@ -38,7 +39,7 @@ export default function PostsPage() {
     <div className="flex flex-1 flex-col gap-4 p-4">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-semibold">Blog Posts</h1>
-        <Dialog>
+                 <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
                    <DialogTrigger asChild>
                      <Button>
                        <Plus className="w-4 h-4 mr-2" />
@@ -52,9 +53,9 @@ export default function PostsPage() {
                          Add a new blog post to your portfolio.
                        </DialogDescription>
                      </DialogHeader>
-                     <PostForm />
+                     <PostForm onSuccess={() => setIsCreateDialogOpen(false)} />
                    </DialogContent>
-        </Dialog>
+                 </Dialog>
       </div>
 
       <div className="grid gap-4">
@@ -79,25 +80,27 @@ export default function PostsPage() {
                   >
                     <Eye className="w-4 h-4" />
                   </Button>
-                  <Dialog>
-                   <DialogTrigger asChild>
-                     <Button variant="outline" size="sm" onClick={() => setEditingPost(post)}>
-                       <Edit className="w-4 h-4" />
-                     </Button>
-                   </DialogTrigger>
-                   <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto">
-                     <DialogHeader>
-                       <DialogTitle>Edit Post</DialogTitle>
-                       <DialogDescription>
-                         Update your blog post.
-                       </DialogDescription>
-                     </DialogHeader>
-                     <PostForm
-                       post={editingPost}
-                       onSuccess={() => setEditingPost(null)}
-                     />
-                   </DialogContent>
-                  </Dialog>
+                   <Dialog open={!!editingPost} onOpenChange={(open) => !open && setEditingPost(null)}>
+                     <DialogTrigger asChild>
+                       <Button variant="outline" size="sm" onClick={() => setEditingPost(post)}>
+                         <Edit className="w-4 h-4" />
+                       </Button>
+                     </DialogTrigger>
+                     <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto">
+                       <DialogHeader>
+                         <DialogTitle>Edit Post</DialogTitle>
+                         <DialogDescription>
+                           Update your blog post.
+                         </DialogDescription>
+                       </DialogHeader>
+                       {editingPost && (
+                         <PostForm
+                           post={editingPost}
+                           onSuccess={() => setEditingPost(null)}
+                         />
+                       )}
+                     </DialogContent>
+                   </Dialog>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button variant="outline" size="sm">

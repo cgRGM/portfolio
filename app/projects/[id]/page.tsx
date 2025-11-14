@@ -53,11 +53,11 @@ export default function ProjectPage({
           </Link>
 
           <article>
-            <img
-              src={project.image || "/placeholder.svg"}
-              alt={project.title}
-              className="w-full rounded-lg border border-border overflow-hidden mb-8 max-h-96 object-cover"
-            />
+             <img
+               src={project.imageUrl || project.image || "/placeholder.svg"}
+               alt={project.title}
+               className="w-full rounded-lg border border-border overflow-hidden mb-8 max-h-96 object-cover"
+             />
 
             <h1 className="text-4xl font-bold text-foreground mb-4">
               {project.title}

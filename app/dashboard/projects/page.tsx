@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function ProjectsPage() {
   const [editingProject, setEditingProject] = useState<any>(null);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const projects = useQuery(api.projects.getProjects, {});
   const deleteProject = useMutation(api.projects.deleteProject);
   const { toast } = useToast();
@@ -38,7 +39,7 @@ export default function ProjectsPage() {
     <div className="flex flex-1 flex-col gap-4 p-4">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-semibold">Projects</h1>
-        <Dialog>
+                 <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
                    <DialogTrigger asChild>
                      <Button>
                        <Plus className="w-4 h-4 mr-2" />
@@ -52,9 +53,9 @@ export default function ProjectsPage() {
                          Add a new project to your portfolio.
                        </DialogDescription>
                      </DialogHeader>
-                     <ProjectForm />
+                     <ProjectForm onSuccess={() => setIsCreateDialogOpen(false)} />
                    </DialogContent>
-        </Dialog>
+                 </Dialog>
       </div>
 
       <div className="grid gap-4">
@@ -83,24 +84,26 @@ export default function ProjectsPage() {
                   >
                     <Eye className="w-4 h-4" />
                   </Button>
-                  <Dialog>
-                     <DialogTrigger asChild>
-                       <Button variant="outline" size="sm" onClick={() => setEditingProject(project)}>
-                         <Edit className="w-4 h-4" />
-                       </Button>
-                     </DialogTrigger>
-                     <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto">
-                       <DialogHeader>
-                         <DialogTitle>Edit Project</DialogTitle>
-                         <DialogDescription>
-                           Update your project.
-                         </DialogDescription>
-                       </DialogHeader>
-                       <ProjectForm
-                         project={editingProject}
-                         onSuccess={() => setEditingProject(null)}
-                       />
-                     </DialogContent>
+                  <Dialog open={!!editingProject} onOpenChange={(open) => !open && setEditingProject(null)}>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="sm" onClick={() => setEditingProject(project)}>
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto">
+                      <DialogHeader>
+                        <DialogTitle>Edit Project</DialogTitle>
+                        <DialogDescription>
+                          Update your project.
+                        </DialogDescription>
+                      </DialogHeader>
+                      {editingProject && (
+                        <ProjectForm
+                          project={editingProject}
+                          onSuccess={() => setEditingProject(null)}
+                        />
+                      )}
+                    </DialogContent>
                   </Dialog>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>

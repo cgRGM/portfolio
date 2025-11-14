@@ -12,20 +12,45 @@ export const getProjects = query({
     description: v.string(),
     about: v.optional(v.string()),
     image: v.string(),
+    imageUrl: v.optional(v.string()),
     tags: v.array(v.string()),
     github: v.string(),
     live: v.string(),
     featured: v.boolean(),
   })),
   handler: async (ctx, args) => {
+    let projects;
     if (args.featuredOnly) {
-      return await ctx.db
+      projects = await ctx.db
         .query("projects")
         .withIndex("by_featured", (q) => q.eq("featured", true))
         .collect();
+    } else {
+      projects = await ctx.db.query("projects").collect();
     }
 
-    return await ctx.db.query("projects").collect();
+    // Generate image URLs for storage IDs
+    return Promise.all(
+      projects.map(async (project) => {
+        let imageUrl = project.image;
+
+        // If image is a storage ID (not a URL), generate the URL
+        if (project.image && !project.image.startsWith('http')) {
+          try {
+            const url = await ctx.storage.getUrl(project.image as any);
+            imageUrl = url || project.image;
+          } catch (error) {
+            console.error('Failed to generate image URL:', error);
+            imageUrl = project.image;
+          }
+        }
+
+        return {
+          ...project,
+          imageUrl,
+        };
+      })
+    );
   },
 });
 
@@ -41,6 +66,7 @@ export const getProject = query({
       description: v.string(),
       about: v.optional(v.string()),
       image: v.string(),
+      imageUrl: v.optional(v.string()),
       tags: v.array(v.string()),
       github: v.string(),
       live: v.string(),
@@ -49,7 +75,26 @@ export const getProject = query({
     v.null()
   ),
   handler: async (ctx, args) => {
-    return await ctx.db.get(args.id);
+    const project = await ctx.db.get(args.id);
+    if (!project) return null;
+
+    let imageUrl = project.image;
+
+    // If image is a storage ID (not a URL), generate the URL
+    if (project.image && !project.image.startsWith('http')) {
+      try {
+        const url = await ctx.storage.getUrl(project.image as any);
+        imageUrl = url || project.image;
+      } catch (error) {
+        console.error('Failed to generate image URL:', error);
+        imageUrl = project.image;
+      }
+    }
+
+    return {
+      ...project,
+      imageUrl,
+    };
   },
 });
 
