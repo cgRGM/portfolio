@@ -8,11 +8,15 @@ import {
   Nextjs,
   Nodejs,
   PostgreSQL,
-  GitHubLight,
-  XAILight,
   LinkedIn,
   VercelDark,
   XAIDark,
+  GitHubDark,
+  Python,
+  AmazonWebServicesDark,
+  Convex,
+  ZedDark,
+  GoogleCloud,
 } from "@ridemountainpig/svgl-react";
 
 export default function Hero() {
@@ -32,17 +36,43 @@ export default function Hero() {
     );
   }
 
-  const technologies = [
-    { name: "TypeScript", icon: TypeScript },
-    { name: "React", icon: ReactLight },
-    { name: "Next.js", icon: Nextjs },
-    { name: "Node.js", icon: Nodejs },
-    { name: "PostgreSQL", icon: PostgreSQL },
-    { name: "Vercel", icon: VercelDark },
+  const techCategories = [
+    {
+      name: "Frontend",
+      technologies: [
+        { name: "TypeScript", icon: TypeScript },
+        { name: "React", icon: ReactLight },
+        { name: "React Native", icon: ReactLight }, // Using React icon for React Native
+        { name: "Next.js", icon: Nextjs },
+      ],
+    },
+    {
+      name: "Backend",
+      technologies: [
+        { name: "Node.js", icon: Nodejs },
+        { name: "PostgreSQL", icon: PostgreSQL },
+        { name: "Python", icon: Python },
+      ],
+    },
+    {
+      name: "Cloud",
+      technologies: [
+        { name: "Vercel", icon: VercelDark },
+        { name: "AWS", icon: AmazonWebServicesDark },
+        { name: "GCP", icon: GoogleCloud },
+      ],
+    },
+    {
+      name: "AI & Tools",
+      technologies: [
+        { name: "Convex", icon: Convex },
+        { name: "Zed", icon: ZedDark },
+      ],
+    },
   ];
 
   return (
-    <section id="about" className="m-8 py-24 md:py-32 max-w-6xl">
+    <section id="about" className=" m-8 py-4 md:py-4 max-w-6xl">
       <div className="space-y-8">
         <div>
           <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-4">
@@ -64,14 +94,14 @@ export default function Hero() {
               href={bio.socialLinks.github}
               className="text-accent hover:underline inline-flex items-center gap-1"
             >
-              <GitHubLight className="w-4 h-4" />
+              <GitHubDark className="size-4" />
             </a>
             ,{" "}
             <a
               href={bio.socialLinks.twitter}
               className="text-accent hover:underline inline-flex items-center gap-1"
             >
-              <XAIDark className="size-6 mt-8" />
+              <XAIDark className="size-6 pt-2" />
             </a>
             , or{" "}
             <a
@@ -84,16 +114,25 @@ export default function Hero() {
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-6">
           <h3 className="text-lg font-semibold text-foreground">Tech Stack</h3>
-          <div className="flex flex-wrap gap-3">
-            {technologies.map((tech) => (
-              <div
-                key={tech.name}
-                className="flex items-center gap-2 px-3 py-2 rounded-md bg-card border border-border text-sm text-foreground hover:border-accent transition-colors"
-              >
-                <tech.icon className="w-4 h-4" />
-                {tech.name}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {techCategories.map((category) => (
+              <div key={category.name} className="space-y-3">
+                <h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">
+                  {category.name}
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {category.technologies.map((tech) => (
+                    <div
+                      key={tech.name}
+                      className="flex items-center gap-2 px-3 py-2 rounded-md bg-card border border-border text-sm text-foreground hover:border-accent transition-colors"
+                    >
+                      <tech.icon className="w-4 h-4" />
+                      {tech.name}
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>

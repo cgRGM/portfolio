@@ -23,11 +23,11 @@ export default function BlogPosts() {
     );
   }
 
-    return (
-      <section
-        id="writing"
-        className="m-8 py-24 md:py-32 border-t border-border max-w-6xl"
-      >
+  return (
+    <section
+      id="writing"
+      className="m-8 py-24 md:py-32 border-t border-border max-w-6xl"
+    >
       <h2 className="text-2xl font-bold text-foreground mb-8">Writing</h2>
 
       <div className="space-y-6">
@@ -63,12 +63,6 @@ export default function BlogPosts() {
                 <Link href={`/posts/${post.slug}`}>
                   <Eye className="w-4 h-4 mr-2" />
                   Read Post
-                </Link>
-              </Button>
-              <Button asChild variant="ghost" size="sm" className="flex-1">
-                <Link href="/posts">
-                  <ArrowRight className="w-4 h-4 mr-2" />
-                  View All
                 </Link>
               </Button>
             </div>
