@@ -17,6 +17,9 @@ import {
   Convex,
   ZedDark,
   GoogleCloud,
+  Docker,
+  Terraform,
+  Redis,
 } from "@ridemountainpig/svgl-react";
 
 export default function Hero() {
@@ -38,28 +41,30 @@ export default function Hero() {
 
   const techCategories = [
     {
-      name: "Frontend",
+      name: "Languages & Frameworks",
       technologies: [
         { name: "TypeScript", icon: TypeScript },
         { name: "React", icon: ReactLight },
-        { name: "React Native", icon: ReactLight }, // Using React icon for React Native
         { name: "Next.js", icon: Nextjs },
-      ],
-    },
-    {
-      name: "Backend",
-      technologies: [
-        { name: "Node.js", icon: Nodejs },
-        { name: "PostgreSQL", icon: PostgreSQL },
         { name: "Python", icon: Python },
+        { name: "Node.js", icon: Nodejs },
       ],
     },
     {
-      name: "Cloud",
+      name: "Cloud & Infrastructure",
       technologies: [
-        { name: "Vercel", icon: VercelDark },
         { name: "AWS", icon: AmazonWebServicesDark },
+        { name: "Vercel", icon: VercelDark },
+        { name: "Docker", icon: Docker },
+        { name: "Terraform", icon: Terraform },
         { name: "GCP", icon: GoogleCloud },
+      ],
+    },
+    {
+      name: "Databases",
+      technologies: [
+        { name: "PostgreSQL", icon: PostgreSQL },
+        { name: "Redis", icon: Redis },
       ],
     },
     {
