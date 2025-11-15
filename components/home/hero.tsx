@@ -20,6 +20,12 @@ import {
   Docker,
   Terraform,
   Redis,
+  MicrosoftNET,
+  MySQL,
+  PostHog,
+  ShadcnUiDark,
+  TanStack,
+  Zod,
 } from "@ridemountainpig/svgl-react";
 
 export default function Hero() {
@@ -48,6 +54,7 @@ export default function Hero() {
         { name: "Next.js", icon: Nextjs },
         { name: "Python", icon: Python },
         { name: "Node.js", icon: Nodejs },
+        { name: "C#", icon: MicrosoftNET },
       ],
     },
     {
@@ -65,13 +72,18 @@ export default function Hero() {
       technologies: [
         { name: "PostgreSQL", icon: PostgreSQL },
         { name: "Redis", icon: Redis },
+        { name: "MySQL", icon: MySQL },
+        { name: "Convex", icon: Convex },
       ],
     },
     {
       name: "AI & Tools",
       technologies: [
-        { name: "Convex", icon: Convex },
+        { name: "shadcn/ui", icon: ShadcnUiDark },
         { name: "Zed", icon: ZedDark },
+        { name: "PostHog", icon: PostHog },
+        { name: "TanStack Query", icon: TanStack },
+        { name: "Zod", icon: Zod },
       ],
     },
   ];
