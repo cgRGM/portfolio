@@ -54,7 +54,6 @@ export default function Hero() {
         { name: "Next.js", icon: Nextjs },
         { name: "Python", icon: Python },
         { name: "Node.js", icon: Nodejs },
-        { name: "C#", icon: MicrosoftNET },
       ],
     },
     {
