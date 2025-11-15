@@ -15,22 +15,21 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className="hidden md:flex fixed left-0 top-0 h-screen w-64 flex-col border-r border-border bg-background px-8 py-12 z-40">
-        <div className="mb-12">
+      <nav className="hidden md:flex fixed left-0 top-0 h-screen w-64 flex-col border-r border-border bg-background px-8 z-40">
+        <div>
           <img
             src="/og-image.png"
             alt="CG Stewart"
-            className="w-full max-w-48 h-auto object-contain"
+            className="w-full size-48 object-contain"
             style={{
               // Option 1: Invert colors (good for black text on white background)
-              filter: 'brightness(0) invert(1)',
 
               // Option 2: For black background with white text - make background transparent
-              // maskImage: 'linear-gradient(black, black)',
-              // WebkitMaskImage: 'linear-gradient(black, black)',
+              maskImage: "linear-gradient(black, black)",
+              WebkitMaskImage: "linear-gradient(black, black)",
 
               // Option 3: Use difference blend mode
-              // mixBlendMode: 'difference',
+              mixBlendMode: "difference",
 
               // Option 4: Custom mask for specific shapes
               // maskImage: 'url(/mask.svg)',
@@ -54,8 +53,6 @@ export default function Navigation() {
             </Link>
           ))}
         </div>
-
-
       </nav>
 
       <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t border-border bg-background z-40">

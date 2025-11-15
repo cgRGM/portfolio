@@ -57,7 +57,7 @@ function ResumeContent({ bio }: { bio: any }) {
   const resumeUrl = useQuery(api.bio.getResumeUrl, { resumeId: bio.resumeId });
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background p-8">
       <main className="flex-1 overflow-auto md:ml-64 pb-20 md:pb-0">
         <div className="max-w-6xl">
           <div className="flex items-center justify-between mb-8">
