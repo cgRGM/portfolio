@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     "react",
     "nextjs",
     "typescript",
+    "convex",
   ],
   authors: [{ name: "CG Stewart" }],
   creator: "CG Stewart",
@@ -86,7 +87,8 @@ export default function RootLayout({
         <ConvexAuthNextjsServerProvider>
           <ConditionalNavigation />
           <ConvexClientProvider> {children}</ConvexClientProvider>
-          <SpeedInsights /> <Analytics />
+          <SpeedInsights />
+          <Analytics />
         </ConvexAuthNextjsServerProvider>
       </body>
     </html>
