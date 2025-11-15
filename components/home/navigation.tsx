@@ -35,10 +35,7 @@ export default function Navigation() {
           ))}
         </div>
 
-        <div className="space-y-4 text-xs text-muted-foreground">
-          <p>Built with Next.js & Convex</p>
-          <p>© {new Date().getFullYear()}</p>
-        </div>
+
       </nav>
 
       <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t border-border bg-background z-40">
