@@ -11,33 +11,41 @@ export default function ResumePage() {
 
   if (!bio) {
     return (
-      <div className="flex min-h-screen bg-background items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">
-            Loading...
-          </h1>
-        </div>
+      <div className="flex min-h-screen bg-background">
+        <main className="flex-1 overflow-auto md:ml-64 pb-20 md:pb-0">
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-foreground mb-4">
+                Loading...
+              </h1>
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
 
   if (!bio.resumeId) {
     return (
-      <div className="flex min-h-screen bg-background items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">
-            Resume Not Available
-          </h1>
-          <p className="text-muted-foreground mb-8">
-            The resume has not been uploaded yet.
-          </p>
-          <Link href="/">
-            <Button variant="outline">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Home
-            </Button>
-          </Link>
-        </div>
+      <div className="flex min-h-screen bg-background">
+        <main className="flex-1 overflow-auto md:ml-64 pb-20 md:pb-0">
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-foreground mb-4">
+                Resume Not Available
+              </h1>
+              <p className="text-muted-foreground mb-8">
+                The resume has not been uploaded yet.
+              </p>
+              <Link href="/">
+                <Button variant="outline">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Home
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
@@ -50,8 +58,8 @@ function ResumeContent({ bio }: { bio: any }) {
 
   return (
     <div className="flex min-h-screen bg-background">
-      <main className="flex-1 px-8 py-20 md:pb-0">
-        <div className="max-w-6xl mx-auto">
+      <main className="flex-1 overflow-auto md:ml-64 pb-20 md:pb-0">
+        <div className="max-w-6xl">
           <div className="flex items-center justify-between mb-8">
             <Link
               href="/"
