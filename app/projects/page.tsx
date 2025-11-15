@@ -19,7 +19,7 @@ export default function ProjectsPage() {
 
   if (!projects) {
     return (
-      <div className="flex min-h-screen bg-background m-20">
+      <div className="flex min-h-screen bg-background">
         <main className="flex-1 px-8 py-20 pb-20 md:pb-0">
           <div className="max-w-6xl">
             <Link
@@ -49,7 +49,7 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-background m-20">
+    <div className="flex min-h-screen bg-background m-6">
       <main className="flex-1 overflow-auto md:ml-64 pb-20 md:pb-0">
         <div className="max-w-6xl">
           <Link

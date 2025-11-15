@@ -9,7 +9,7 @@ export default function PostsPage() {
 
   if (!posts) {
     return (
-      <div className="flex min-h-screen bg-background m-20">
+      <div className="flex min-h-screen bg-background m-6">
         <main className="flex-1 px-8 py-20 md:py-20 pb-20 md:pb-0">
           <div className="max-w-4xl">
             <Link
