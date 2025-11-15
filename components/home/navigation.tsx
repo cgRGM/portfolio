@@ -7,6 +7,7 @@ const navigationItems = [
   { label: "about", href: "/" },
   { label: "writing", href: "/posts" },
   { label: "projects", href: "/projects" },
+  { label: "resume", href: "/resume" },
 ];
 
 export default function Navigation() {

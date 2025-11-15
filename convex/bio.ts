@@ -10,6 +10,7 @@ export const getBio = query({
       name: v.string(),
       title: v.string(),
       bio: v.array(v.string()),
+      resumeId: v.optional(v.id("_storage")),
       socialLinks: v.object({
         github: v.string(),
         twitter: v.string(),
@@ -29,6 +30,7 @@ export const updateBio = mutation({
     name: v.string(),
     title: v.string(),
     bio: v.array(v.string()),
+    resumeId: v.optional(v.id("_storage")),
     socialLinks: v.object({
       github: v.string(),
       twitter: v.string(),
@@ -45,5 +47,23 @@ export const updateBio = mutation({
       await ctx.db.insert("bios", args);
     }
     return null;
+  },
+});
+
+export const generateUploadUrl = mutation({
+  args: {},
+  returns: v.string(),
+  handler: async (ctx) => {
+    return await ctx.storage.generateUploadUrl();
+  },
+});
+
+export const getResumeUrl = query({
+  args: {
+    resumeId: v.id("_storage"),
+  },
+  returns: v.string(),
+  handler: async (ctx, args) => {
+    return await ctx.storage.getUrl(args.resumeId) || "";
   },
 });

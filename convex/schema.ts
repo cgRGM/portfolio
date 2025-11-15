@@ -6,6 +6,7 @@ export default defineSchema({
     name: v.string(),
     title: v.string(),
     bio: v.array(v.string()),
+    resumeId: v.optional(v.id("_storage")),
     socialLinks: v.object({
       github: v.string(),
       twitter: v.string(),
