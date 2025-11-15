@@ -20,12 +20,12 @@ import {
   Docker,
   Terraform,
   Redis,
-  MicrosoftNET,
   MySQL,
   PostHog,
   ShadcnUiDark,
   TanStack,
   Zod,
+  DocumensoLight,
 } from "@ridemountainpig/svgl-react";
 
 export default function Hero() {
@@ -125,6 +125,13 @@ export default function Hero() {
               className="text-accent hover:underline inline-flex items-center gap-1"
             >
               <LinkedIn className="w-4 h-4" />
+            </a>
+            . You can also check out my resume{" "}
+            <a
+              href={"/resume"}
+              className="text-accent hover:underline inline-flex items-center gap-1"
+            >
+              here
             </a>
             .
           </p>

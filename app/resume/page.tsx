@@ -9,6 +9,12 @@ import { Download, ArrowLeft } from "lucide-react";
 export default function ResumePage() {
   const bio = useQuery(api.bio.getBio, {});
 
+  // Always call the hook in the same position
+  const resumeUrl = useQuery(
+    api.bio.getResumeUrl,
+    bio?.resumeId ? { resumeId: bio.resumeId } : { resumeId: "" as any }
+  );
+
   if (!bio) {
     return (
       <div className="flex min-h-screen bg-background items-center justify-center">
@@ -37,9 +43,6 @@ export default function ResumePage() {
       </div>
     );
   }
-
-  // Get the resume URL
-  const resumeUrl = useQuery(api.bio.getResumeUrl, { resumeId: bio.resumeId });
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -75,7 +78,7 @@ export default function ResumePage() {
               </p>
             </div>
 
-            {resumeUrl ? (
+            {resumeUrl && bio.resumeId ? (
               <div className="p-6">
                 <iframe
                   src={resumeUrl}
