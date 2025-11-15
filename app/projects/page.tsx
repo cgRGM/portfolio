@@ -49,7 +49,7 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-background m-6">
+    <div className="flex min-h-screen bg-background p-20">
       <main className="flex-1 overflow-auto md:ml-64 pb-20 md:pb-0">
         <div className="max-w-6xl">
           <Link

@@ -13,7 +13,9 @@ export default function ResumePage() {
     return (
       <div className="flex min-h-screen bg-background items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Loading...</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">
+            Loading...
+          </h1>
         </div>
       </div>
     );
@@ -23,7 +25,9 @@ export default function ResumePage() {
     return (
       <div className="flex min-h-screen bg-background items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Resume Not Available</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">
+            Resume Not Available
+          </h1>
           <p className="text-muted-foreground mb-8">
             The resume has not been uploaded yet.
           </p>
@@ -38,9 +42,7 @@ export default function ResumePage() {
     );
   }
 
-  return (
-    <ResumeContent bio={bio} />
-  );
+  return <ResumeContent bio={bio} />;
 }
 
 function ResumeContent({ bio }: { bio: any }) {
@@ -48,10 +50,13 @@ function ResumeContent({ bio }: { bio: any }) {
 
   return (
     <div className="flex min-h-screen bg-background">
-      <main className="flex-1 px-8 py-20 pb-20 md:pb-0">
-        <div className="max-w-4xl mx-auto">
+      <main className="flex-1 px-8 py-20 md:pb-0">
+        <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-8">
-            <Link href="/" className="text-accent hover:underline inline-flex items-center text-sm">
+            <Link
+              href="/"
+              className="text-accent hover:underline inline-flex items-center text-sm"
+            >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to home
             </Link>
@@ -61,7 +66,7 @@ function ResumeContent({ bio }: { bio: any }) {
                   href={resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  download={`${bio.name || 'Resume'}.pdf`}
+                  download={`${bio.name || "Resume"}.pdf`}
                 >
                   <Download className="w-4 h-4 mr-2" />
                   Download PDF
@@ -73,10 +78,10 @@ function ResumeContent({ bio }: { bio: any }) {
           <div className="bg-card rounded-lg border border-border overflow-hidden">
             <div className="p-6 border-b border-border">
               <h1 className="text-2xl font-bold text-foreground">
-                {bio.name || 'Resume'}
+                {bio.name || "Resume"}
               </h1>
               <p className="text-muted-foreground mt-1">
-                {bio.title || 'Professional Resume'}
+                {bio.title || "Professional Resume"}
               </p>
             </div>
 

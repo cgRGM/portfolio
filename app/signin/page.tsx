@@ -5,7 +5,13 @@ import { useAuthActions } from "@convex-dev/auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2 } from "lucide-react";
 
@@ -49,7 +55,7 @@ export default function SignInPage() {
                 id="email"
                 name="email"
                 type="email"
-                placeholder="cg@rocktownlabs.com"
+                placeholder="email@example.com"
                 required
                 disabled={isLoading}
               />
@@ -85,7 +91,9 @@ export default function SignInPage() {
                 className="text-sm text-muted-foreground hover:text-foreground"
                 disabled={isLoading}
               >
-                {step === "signIn" ? "Need to create an account?" : "Already have an account?"}
+                {step === "signIn"
+                  ? "Need to create an account?"
+                  : "Already have an account?"}
               </button>
             </div>
           </form>
